@@ -3,5 +3,11 @@ dist
 .DS_Store
 .env
 
+# Build & temporary verification artifacts
+build
+tmpframes
+verify-*
+
 # Ignore the output video from Git but not videos you import into src/.
 out
+
