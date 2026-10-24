@@ -1,12 +1,14 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { ThemeConfig } from "../types";
 
 export const CtaCard: React.FC<{
   websiteUrl: string;
   ctaHeadline?: string;
   ctaSubline?: string;
   storeBadge?: string;
-}> = ({ websiteUrl, ctaHeadline, ctaSubline, storeBadge }) => {
+  theme?: ThemeConfig;
+}> = ({ websiteUrl, ctaHeadline, ctaSubline, storeBadge, theme }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -25,6 +27,10 @@ export const CtaCard: React.FC<{
 
   // Pointer bounce
   const pointerBounce = Math.sin((frame / 8) * Math.PI) * 10;
+
+  const primary = theme?.primaryColor ?? "#6366F1";
+  const secondary = theme?.secondaryColor ?? "#4F46E5";
+  const accent = theme?.accentColor ?? "#38BDF8";
 
   return (
     <div
@@ -50,15 +56,13 @@ export const CtaCard: React.FC<{
         style={{
           width: "100%",
           maxWidth: 940,
-          background:
-            "linear-gradient(135deg, rgba(234, 88, 12, 0.96) 0%, rgba(194, 65, 12, 0.96) 100%)",
+          background: `linear-gradient(135deg, ${primary} 0%, ${secondary} 100%)`,
           borderRadius: 28,
           padding: "24px 32px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          boxShadow:
-            "0 20px 50px rgba(234, 88, 12, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
+          boxShadow: `0 20px 50px ${primary}80, inset 0 1px 0 rgba(255, 255, 255, 0.4)`,
           border: "2px solid rgba(255, 255, 255, 0.35)",
         }}
       >
@@ -68,7 +72,7 @@ export const CtaCard: React.FC<{
             backgroundColor: "rgba(0, 0, 0, 0.45)",
             padding: "8px 24px",
             borderRadius: 20,
-            color: "#FEF08A",
+            color: accent,
             fontSize: 22,
             fontWeight: 800,
             letterSpacing: "0.5px",
@@ -95,22 +99,22 @@ export const CtaCard: React.FC<{
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.35)",
           }}
         >
-          <span style={{ fontSize: 36 }}>{storeBadge ?? "🌐"}</span>
+          <span style={{ fontSize: 36 }}>{storeBadge ?? "▶️"}</span>
           <span
             style={{
-              color: "#C2410C",
-              fontSize: 42,
+              color: primary,
+              fontSize: 38,
               fontWeight: 900,
               letterSpacing: "0.5px",
               fontFamily:
                 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
-            {websiteUrl}
+            {websiteUrl.replace(/^https?:\/\//, "")}
           </span>
         </div>
 
-        {/* Social Media Link in Bio Prompt */}
+        {/* Action Prompt */}
         <div
           style={{
             display: "flex",
@@ -137,7 +141,7 @@ export const CtaCard: React.FC<{
                 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
-            {ctaSubline ?? "Klik Link di Bio untuk Akses Semua Resep!"}
+            {ctaSubline ?? "Tersedia Gratis di Google Play Store!"}
           </span>
         </div>
       </div>

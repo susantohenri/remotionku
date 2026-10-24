@@ -1,7 +1,14 @@
+export type CaptionPosition = 'bottom' | 'center' | 'top';
+export type CaptionStyle = 'card' | 'kinetic-sticker' | 'minimal-pill';
+export type CaptionSize = 'normal' | 'huge' | 'compact';
+
 export type CaptionData = {
   headline: string;
   subText?: string;
   highlightWords?: string[];
+  position?: CaptionPosition;
+  style?: CaptionStyle;
+  size?: CaptionSize;
 };
 
 export type SceneData = {
@@ -20,12 +27,21 @@ export type SceneData = {
   caption?: CaptionData;
   voiceoverScript?: string;
   badge?: string;
+  /** Template / efek visual tambahan dari library templates (opsional) */
+  overlayTemplate?: string;
 };
 
 export type ProjectAudioConfig = {
   voiceoverSrc: string;
   backgroundMusicSrc?: string;
   bgmVolume?: number;
+};
+
+export type ThemeConfig = {
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  textColor?: string;
 };
 
 export type ProjectConfig = {
@@ -41,6 +57,7 @@ export type ProjectConfig = {
   ctaHeadline?: string;
   ctaSubline?: string;
   storeBadge?: string;
+  theme?: ThemeConfig;
 };
 
 export type VideoSchema = {

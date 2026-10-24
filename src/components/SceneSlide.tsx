@@ -11,8 +11,8 @@ import {
 } from "remotion";
 import { SceneData, VideoSchema } from "../types";
 import { CaptionOverlay } from "./CaptionOverlay";
-import { HeaderBar } from "./HeaderBar";
 import { CtaCard } from "./CtaCard";
+import { TemplateOverlay } from "./TemplateOverlay";
 
 export const SceneSlide: React.FC<{
   scene: SceneData;
@@ -83,6 +83,7 @@ export const SceneSlide: React.FC<{
   );
 
   const isLastScene = sceneIndex === totalScenes - 1 || scene.id.endsWith("-cta") || scene.id.includes("cta");
+  const isHookScene = sceneIndex === 0 || scene.id.includes("hook");
 
   // Video background check
   const videoStart = scene.videoStartFrame ?? 0;
@@ -156,22 +157,16 @@ export const SceneSlide: React.FC<{
         }}
       />
 
-      {/* Top Header & Branding */}
-      <HeaderBar
-        sceneIndex={sceneIndex}
-        totalScenes={totalScenes}
-        sceneName={scene.name}
-        badge={scene.badge}
-        websiteUrl={websiteUrl}
-        appName={data.project.appName}
-        appBadge={data.project.appBadge}
-      />
+      {/* Dynamic Visual Template / Overlay Effect */}
+      <TemplateOverlay templateName={scene.overlayTemplate} />
 
-      {/* Bottom Caption Overlay (only if headline is provided) */}
+      {/* Dynamic Caption Overlay */}
       {scene.caption?.headline && (
         <CaptionOverlay
           caption={scene.caption}
           bottomOffset={isLastScene ? 450 : 340}
+          theme={data.project.theme}
+          isHookScene={isHookScene}
         />
       )}
 
@@ -182,6 +177,7 @@ export const SceneSlide: React.FC<{
           ctaHeadline={data.project.ctaHeadline}
           ctaSubline={data.project.ctaSubline}
           storeBadge={data.project.storeBadge}
+          theme={data.project.theme}
         />
       )}
     </AbsoluteFill>
