@@ -14,6 +14,13 @@ export const ContentVideo: React.FC<{ data: VideoSchema }> = ({ data }) => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000000" }}>
+      {/* High-Personality Modern & Expressive Google Fonts */}
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@700;900&family=Outfit:wght@700;900&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Space+Grotesk:wght@700&display=swap');
+        `}
+      </style>
+
       {/* Voiceover Audio runs continuously throughout the entire video */}
       <Audio
         src={staticFile(project.audio.voiceoverSrc)}

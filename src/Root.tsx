@@ -23,6 +23,19 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
 
+      {/* Backward-compatible alias for pipelines calling JajanCuan */}
+      <Composition
+        id="JajanCuan"
+        component={ContentVideo}
+        durationInFrames={videoData.project.totalDurationInFrames}
+        fps={videoData.project.fps}
+        width={videoData.project.width}
+        height={videoData.project.height}
+        defaultProps={{
+          data: videoData,
+        }}
+      />
+
       <Folder name="Templates">
         <Folder name="Elements">
           <Composition

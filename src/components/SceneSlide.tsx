@@ -167,6 +167,7 @@ export const SceneSlide: React.FC<{
           bottomOffset={isLastScene ? 450 : 340}
           theme={data.project.theme}
           isHookScene={isHookScene}
+          sceneIndex={sceneIndex}
         />
       )}
 
@@ -174,6 +175,7 @@ export const SceneSlide: React.FC<{
       {isLastScene && (
         <CtaCard
           websiteUrl={websiteUrl}
+          appName={data.project.appName}
           ctaHeadline={data.project.ctaHeadline}
           ctaSubline={data.project.ctaSubline}
           storeBadge={data.project.storeBadge}

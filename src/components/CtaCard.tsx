@@ -3,12 +3,13 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { ThemeConfig } from "../types";
 
 export const CtaCard: React.FC<{
-  websiteUrl: string;
+  websiteUrl?: string;
+  appName?: string;
   ctaHeadline?: string;
   ctaSubline?: string;
   storeBadge?: string;
   theme?: ThemeConfig;
-}> = ({ websiteUrl, ctaHeadline, ctaSubline, storeBadge, theme }) => {
+}> = ({ websiteUrl, appName, ctaHeadline, ctaSubline, storeBadge, theme }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -110,7 +111,7 @@ export const CtaCard: React.FC<{
                 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
           >
-            {websiteUrl.replace(/^https?:\/\//, "")}
+            {appName ?? (websiteUrl ? websiteUrl.replace(/^https?:\/\//, "") : "Creative Island Hub")}
           </span>
         </div>
 
