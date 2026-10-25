@@ -17,12 +17,14 @@ export const CaptionOverlay: React.FC<{
   theme?: ThemeConfig;
   isHookScene?: boolean;
   sceneIndex?: number;
+  fallbackSubtitle?: string;
 }> = ({
   caption,
   bottomOffset = 340,
   theme,
   isHookScene = false,
   sceneIndex = 0,
+  fallbackSubtitle,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -734,37 +736,39 @@ export const CaptionOverlay: React.FC<{
         </div>
       )}
 
-      {/* Main Headline Wrapper */}
-      <div
-        style={{
-          transform: `${entranceTransform} translateY(${floatY}px) rotate(${tiltDeg}deg) scale(${pulseScale})`,
-          opacity: entranceOpacity,
-          ...getWrapperStyle(),
-        }}
-      >
-        <h1
+      {/* Main Headline Wrapper (if headline is present) */}
+      {caption.headline && caption.headline.trim().length > 0 && (
+        <div
           style={{
-            margin: 0,
-            fontSize: headlineFontSize,
-            fontWeight: 950,
-            lineHeight: 1.2,
-            letterSpacing:
-              style === "cyber-neon"
-                ? "1.5px"
-                : style === "editorial-luxury"
-                ? "1.2px"
-                : "0.5px",
-            fontFamily,
-            textTransform:
-              style === "editorial-luxury" ? "none" : "uppercase",
+            transform: `${entranceTransform} translateY(${floatY}px) rotate(${tiltDeg}deg) scale(${pulseScale})`,
+            opacity: entranceOpacity,
+            ...getWrapperStyle(),
           }}
         >
-          {renderStyledHeadline()}
-        </h1>
-      </div>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: headlineFontSize,
+              fontWeight: 950,
+              lineHeight: 1.2,
+              letterSpacing:
+                style === "cyber-neon"
+                  ? "1.5px"
+                  : style === "editorial-luxury"
+                  ? "1.2px"
+                  : "0.5px",
+              fontFamily,
+              textTransform:
+                style === "editorial-luxury" ? "none" : "uppercase",
+            }}
+          >
+            {renderStyledHeadline()}
+          </h1>
+        </div>
+      )}
 
-      {/* SubText Pill */}
-      {caption.subText && (
+      {/* Voiceover Subtitle / Read-Along SubText */}
+      {(caption.subtitle || caption.subText || fallbackSubtitle) && (
         <div
           style={{
             transform: `translateY(${interpolate(
@@ -788,7 +792,7 @@ export const CaptionOverlay: React.FC<{
               textAlign: align,
             }}
           >
-            {caption.subText}
+            {caption.subtitle ?? caption.subText ?? fallbackSubtitle}
           </p>
         </div>
       )}

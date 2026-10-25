@@ -62,7 +62,8 @@ export type CaptionCustomColors = {
 
 export type CaptionData = {
   headline: string;
-  subText?: string;
+  subtitle?: string;        // Subtitle lengkap naskah suara yang dibacakan
+  subText?: string;         // Alias/dukungan teks pendukung
   highlightWords?: string[];
   position?: CaptionPosition;
   placement?: CaptionPlacement;
@@ -76,6 +77,42 @@ export type CaptionData = {
   customColors?: CaptionCustomColors;
   glow?: boolean;
 };
+
+export type SfxName =
+  | 'auto'
+  | 'none'
+  | 'whip'
+  | 'whoosh'
+  | 'pageTurn'
+  | 'uiSwitch'
+  | 'mouseClick'
+  | 'shutterModern'
+  | 'shutterOld'
+  | 'ding'
+  | 'bruh'
+  | 'vineBoom'
+  | 'windowsXpError'
+  | 'fah'
+  | 'spongebobFail'
+  | 'omgHellNah'
+  | 'priceIsRightFail'
+  | 'romanceMeme'
+  | 'boneCrack'
+  | 'animeWow'
+  | 'yippee'
+  | 'loadingLag'
+  | 'wilhelmScream'
+  | 'macQuack'
+  | 'skedaddle'
+  | 'snapchatNotification'
+  | 'nellyAhh'
+  | 'sanctuaryGuardianWhat'
+  | 'minecraftHurt'
+  | 'ohMyGodVine'
+  | 'illuminatiConfirmed'
+  | 'dramaticBoomer'
+  | 'triggered'
+  | 'recordScratch';
 
 export type SceneData = {
   id: string;
@@ -95,6 +132,10 @@ export type SceneData = {
   badge?: string;
   /** Template / efek visual tambahan dari library templates (opsional) */
   overlayTemplate?: string;
+  /** Pilihan sound effect untuk scene ini (opsional: auto | none | whip | whoosh | ding | dll) */
+  sfx?: SfxName;
+  /** Volume SFX 0.0 - 1.0 (default auto disesuaikan ~0.2 - 0.25 agar voiceover tetap jernih) */
+  sfxVolume?: number;
 };
 
 export type ProjectAudioConfig = {

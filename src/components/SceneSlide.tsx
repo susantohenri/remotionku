@@ -1,6 +1,7 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Easing,
   Img,
   interpolate,
@@ -13,6 +14,7 @@ import { SceneData, VideoSchema } from "../types";
 import { CaptionOverlay } from "./CaptionOverlay";
 import { CtaCard } from "./CtaCard";
 import { TemplateOverlay } from "./TemplateOverlay";
+import { resolveSceneSfx } from "../utils/creativeSoundDirector";
 
 export const SceneSlide: React.FC<{
   scene: SceneData;
@@ -22,6 +24,9 @@ export const SceneSlide: React.FC<{
   data: VideoSchema;
 }> = ({ scene, sceneIndex, totalScenes, websiteUrl, data }) => {
   const frame = useCurrentFrame();
+
+  // Intelligent & selective sound design (Hook accent, CTA impact, or custom cues)
+  const sfxConfig = resolveSceneSfx(scene, sceneIndex, totalScenes);
 
   // Ken Burns subtle zoom (used for background)
   const zoomScale = interpolate(
@@ -160,14 +165,18 @@ export const SceneSlide: React.FC<{
       {/* Dynamic Visual Template / Overlay Effect */}
       <TemplateOverlay templateName={scene.overlayTemplate} />
 
-      {/* Dynamic Caption Overlay */}
-      {scene.caption?.headline && (
+      {/* Dynamic Caption & Voiceover Subtitle Overlay */}
+      {(scene.caption?.headline ||
+        scene.caption?.subtitle ||
+        scene.caption?.subText ||
+        scene.voiceoverScript) && (
         <CaptionOverlay
-          caption={scene.caption}
+          caption={scene.caption ?? { headline: "" }}
           bottomOffset={isLastScene ? 450 : 340}
           theme={data.project.theme}
           isHookScene={isHookScene}
           sceneIndex={sceneIndex}
+          fallbackSubtitle={scene.voiceoverScript}
         />
       )}
 
@@ -181,6 +190,16 @@ export const SceneSlide: React.FC<{
           storeBadge={data.project.storeBadge}
           theme={data.project.theme}
         />
+      )}
+
+      {/* Contextual Sound Effect (accent, punchline, or transition) */}
+      {sfxConfig.src && (
+        <Sequence from={sfxConfig.startFrameOffset}>
+          <Audio
+            src={sfxConfig.src}
+            volume={sfxConfig.volume}
+          />
+        </Sequence>
       )}
     </AbsoluteFill>
   );
